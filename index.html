@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8" content="text/javascript">
+    <script src="plugins/plugin-loader.js"></script>
+    <link rel="stylesheet" href="plugins/plugin-loader.css">
+    <script>
+        // Set virtual screen width size to 640 pixels
+        monaca.viewport({width: 620});
+        
+        document.addEventListener("DOMContentLoaded", onContentLoaded, false);
+        
+        function onContentLoaded(){
+        
+        $('#bo').click(function(){
+            window.location.href = "index2.html";
+        });
+        
+        }
+        
+        setInterval('tenmetsu()', 700);
+        
+        function tenmetsu(){
+            
+            $('#ts').fadeOut(300,function(){$(this).fadeIn(300)});
+        }
+        
+    </script>
+    <style>
+        body{  
+        background-image:url(takoyakiya.gif);
+        background-size:810px 1000px;
+        background-repeat:no-repeat;
+        background-position: 10% 2%
+        }
+    </style>
+</head>
+<body>
+
+ <div id = "bo" style="position:absolute;height:1000px;width:700px;">
+ <img id = "ts" src="touchToStart.png" style="position:absolute;top:1000px;left:150px;width:350px;height:50px;"/>
+ </div>
+
+</body>
+</html>

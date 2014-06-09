@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta name="viewport" content="user-scalable = no" />
+    <meta charset="utf-8">
+    <script src="plugins/plugin-loader.js"></script>
+    <link rel="stylesheet" href="plugins/plugin-loader.css">
+    <script type="text/javascript">
+        // Set virtual screen width size to 320 pixels 
+        monaca.viewport({width: 620});
+        
+         $(window).on('touchmove.noScroll', function(e){
+                e.preventDefault();
+            });
+        
+    function change(){
+        
+        $(function(){
+        $('#Image2').css("display", "block");
+        
+        });
+        
+        $(function(){
+        $('#Image1').css("display", "none");
+        
+        });
+
+    } 
+    
+    function change2(){
+        
+        $(function(){
+        $('#Image1').css("display", "block");
+        
+        });
+        
+        $(function(){
+        $('#Image2').css("display", "none");
+        
+        });
+
+    }
+    
+    window.onload =  $(function(){
+        $('#Image1').css("display", "block");
+        
+        });
+    
+    function kettei(){
+        var character1 = document.getElementById("Image1");
+        var character2 = document.getElementById("Image2");
+        
+        if(character1.style.display == 'block'){
+            
+            window.location.href = "index4.html";
+            
+        }else if(character2.style.display == 'block'){
+            
+            window.location.href = "index5.html";
+        }
+    }
+
+
+       
+    </script>
+    <style>
+    #select{
+        position:absolute;
+        top:100px;
+        left:170px;
+        width:300px;
+        height:300px;
+        
+    }
+    #Image1{
+        position:absolute;
+        display:block;
+        top:500px;
+        left:220px;
+        width:200px;
+        height:200px;
+        
+    }
+     #Image2{
+        position:absolute;
+        display:none;
+        top:500px;
+        left:220px;
+        width:200px;
+        height:200px;
+        
+    }
+    
+    #Image3{
+        position:absolute;
+        top:700px;
+        left:170px;
+        width:400px;
+        height:400px;
+        
+    }
+
+    </style>
+</head>
+<body>
+  <img id="select" src="charaselect.png" />
+   <div id ="cImage">
+    <img onClick="change();" id="Image1" src="takoyakigif.gif" />
+    <img onClick="change2();"id="Image2" src="bashiragif.gif" />
+   </div>
+   <img onClick="kettei();" id="Image3" src="ketteibutton.png"/>
+</body>
+</html>

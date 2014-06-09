@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="plugins/plugin-loader.js"></script>
+    <link rel="stylesheet" href="plugins/plugin-loader.css">
+    <script>
+        
+        monaca.viewport({width: 620});
+        
+        function fade(){
+            $(function(){
+                            $('#takoend').fadeIn(2500);
+                        });
+        }
+        
+        setTimeout(function(){
+            $('#continue').fadeIn(1000);
+        },4000);
+        
+        setTimeout(function(){
+            $('#yes').fadeIn(1000);
+        },4000);
+        
+        setTimeout(function(){
+            $('#no').fadeIn(1000);
+        },4000);
+        
+        function retry(){
+            window.location.href = "index4.html";
+        }
+        
+        function totop(){
+            window.location.href = "index.html";
+        }
+
+        
+    </script>
+</head>
+<body onLoad="fade();" style="background-color:black;">
+   <img src="shukka.png" style="position:absolute;top:300px;left:50px;width:500px;"/>
+   <img id="takoend" src="takoend.png" style="position:absolute;top:600px;left:200px;width:200px;display:none;"/>
+   <img id="continue" src="continue.png" style="position:absolute;top:900px;left:50px;width:300px;display:none;"/>
+   <img onClick="retry();" id="yes" src="yes.png" style="position:absolute;top:850px;left:450px;width:100px;height:50px;display:none;"/>
+   <img onClick="totop();" id="no" src="no.png" style="position:absolute;top:950px;left:460px;width:90px;height:40px;display:none;"/>
+</body>
+</html>

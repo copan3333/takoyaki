@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta name="viewport" content="user-scalable = no" />
+    <meta charset="utf-8" content="text/javascript">
+    <script src="plugins/plugin-loader.js"></script>
+    <link rel="stylesheet" href="plugins/plugin-loader.css">
+    <script>
+        // Set virtual screen width size to 320 pixels 
+        monaca.viewport({width: 620});
+        
+        $(window).on('touchmove.noScroll', function(e){
+            e.preventDefault(); 
+        });
+        
+        document.addEventListener("DOMContentLoaded", onContentLoaded, false);
+        
+        function onContentLoaded(){
+            $('#tako').animate({
+                'left': '410px'
+            }
+        ,{'duration': 3000,
+          'complete': function(){
+                        window.location.href = "index3.html";
+                       }
+        });
+        
+         $('#bo').click(function(){
+            window.location.href = "index3.html";
+        });
+        
+        }
+
+        
+    </script>
+</head>
+<body style="background-color:black;">
+<div id = "bo" style="position:absolute;height:1000px;width:600px;">
+    
+</div>
+  <img src="loading.gif" style="position:absolute;top:150px;left:250px;"/>
+
+<img id="tako" src="takoyakiwalk.gif" style="position:absolute;top:400px;left:0px;" />
+</body>
+</html>

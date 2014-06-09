@@ -1,0 +1,741 @@
+<!DOCTYPE HTML>
+<html style="overflow:hidden;">
+<head>
+<meta name="viewport" content="user-scalable = no" />
+    <meta charset="utf-8">
+    <script src="plugins/plugin-loader.js"></script>
+    <link rel="stylesheet" href="plugins/plugin-loader.css">
+    <script type="text/javascript">
+        // Set virtual screen width size to 320 pixels 
+        monaca.viewport({width: 620});
+        var p = 0;
+        var q = 0;
+        
+        $(window).on('touchmove.noScroll', function(e){
+                e.preventDefault();
+            });
+        
+        document.addEventListener("DOMContentLoaded", onContentLoaded, false);
+        
+ 
+        // DOMコンテンツのロード完了時に呼び出される
+        function onContentLoaded() {
+            
+            var isTouch = ('ontouchstart' in window);
+ 
+            /* イベントを jQuery.bind で捕獲します。 */
+            $('#Image1').bind({
+                 
+                /* タッチの開始、マウスボタンを押したとき */
+                'touchstart mousedown': function(e) {
+                    // ページが動いたり、反応を止める
+                    e.preventDefault();
+         
+                    // 開始位置 X,Y 座標を覚えておく
+                    // （touchmove イベントを通らず終了したときのために必ず覚えておくこと）
+                    this.pageX = (isTouch ? event.changedTouches[0].pageX : e.pageX);
+                    this.pageY = (isTouch ? event.changedTouches[0].pageY : e.pageY);
+ 
+                    // 現在の場所を覚えておく
+                    this.left = $(this).position().left;
+                    this.top = $(this).position().top;
+         
+                    // タッチ処理を開始したフラグをたてる
+                     this.touched = true;
+                },
+                /* タッチしながら移動、マウスのドラッグ */
+                'touchmove mousemove': function(e) {
+         
+                    // 開始していない場合は動かないようにする
+                    // 過剰動作の防止
+                    if (!this.touched) {
+                        return;
+                    }
+         
+                    // ページが動くのを止める
+                    e.preventDefault();
+         
+                    // 位置を取得する
+                    this.left = this.left - (this.pageX - (isTouch ? event.changedTouches[0].pageX : e.pageX) );
+                    this.top = this.top - (this.pageY - (isTouch ? event.changedTouches[0].pageY : e.pageY) );
+ 
+                    //移動させる
+                    $(this).css({left:this.left, top:this.top});
+                    
+                    var L = parseFloat($('#Image1').css("left").replace(/px/ , ""))+20;
+                    var R = L + $('#Image1').width()-20;
+                    var T = parseFloat($('#Image1').css("top").replace(/px/ , ""))+20;
+                    var B = T + $('#Image1').height()-40;
+
+                    //マヨさんの4点座標を取得
+                    var hitX = parseFloat($('#mayo').css("left").replace(/px/ , ""))+40;
+                    var hitY = parseFloat($('#mayo').css("top").replace(/px/ , ""))+40;
+                    var hitRight = hitX + $('#mayo').width()-40;
+                    var hitBottom = hitY + $('#mayo').height()-60;
+                    
+                    //タコさんの4点座標を取得
+                    var hitX1 = parseFloat($('#tako').css("left").replace(/px/ , ""))+40;
+                    var hitY1 = parseFloat($('#tako').css("top").replace(/px/ , ""))+40;
+                    var hitRight1 = hitX1 + $('#tako').width()-60;
+                    var hitBottom1 = hitY1 + $('#tako').height()-80;
+                    
+                    //タコさん2の4点座標を取得
+                    var hitX2 = parseFloat($('#tako1').css("left").replace(/px/ , ""))+50;
+                    var hitY2 = parseFloat($('#tako1').css("top").replace(/px/ , ""))+50;
+                    var hitRight2 = hitX2 + $('#tako1').width()-60;
+                    var hitBottom2 = hitY2 + $('#tako1').height()-50;
+                    
+                     //タコさん3の4点座標を取得
+                    var hitX3 = parseFloat($('#tako2').css("left").replace(/px/ , ""))+50;
+                    var hitY3 = parseFloat($('#tako2').css("top").replace(/px/ , ""))+50;
+                    var hitRight3 = hitX3 + $('#tako2').width()-60;
+                    var hitBottom3 = hitY3 + $('#tako2').height()-50;
+                    
+                     //チーズの4点座標を取得
+                    var hitX5 = parseFloat($('#cheese').css("left").replace(/px/ , ""));
+                    var hitY5 = parseFloat($('#cheese').css("top").replace(/px/ , ""));
+                    var hitRight5 = hitX5 + $('#cheese').width();
+                    var hitBottom5 = hitY5 + $('#cheese').height();
+                    
+                    //チーズの4点座標を取得
+                    var hitX6 = parseFloat($('#cheese1').css("left").replace(/px/ , ""));
+                    var hitY6 = parseFloat($('#cheese1').css("top").replace(/px/ , ""));
+                    var hitRight6 = hitX6 + $('#cheese1').width();
+                    var hitBottom6 = hitY6 + $('#cheese1').height();
+                    
+                    //チーズ2の4点座標を取得
+                    var hitX7 = parseFloat($('#cheese2').css("left").replace(/px/ , ""));
+                    var hitY7 = parseFloat($('#cheese2').css("top").replace(/px/ , ""));
+                    var hitRight7 = hitX7 + $('#cheese2').width();
+                    var hitBottom7 = hitY7 + $('#cheese2').height();
+                    
+                    //チーズ3の4点座標を取得
+                    var hitX8 = parseFloat($('#cheese3').css("left").replace(/px/ , ""));
+                    var hitY8 = parseFloat($('#cheese3').css("top").replace(/px/ , ""));
+                    var hitRight8 = hitX8 + $('#cheese3').width();
+                    var hitBottom8 = hitY8 + $('#cheese3').height();
+                    
+                    //右の4点座標を取得
+                    var hitX4 = parseFloat($('#migi').css("left").replace(/px/ , ""))+40;
+                    var hitY4 = parseFloat($('#migi').css("top").replace(/px/ , ""))+40;
+                    var hitRight4 = hitX4 + $('#migi').width()-40;
+                    var hitBottom4 = hitY4 + $('#migi').height()-40;
+                    
+                    var hitFlg = false;
+                    var hitFlg2 = false;
+
+                    //あたり判定の計算
+                    if(L < hitX && hitX < R && T < hitY && hitY < B){
+                        
+                        hitFlg = true;
+                        
+                    }else if(L < hitRight && hitRight < R && T < hitY && hitY < B){
+                        
+                        hitFlg = true;
+                        
+                    }else if(L < hitX && hitX < R && T < hitBottom && hitBottom < B){
+        
+                        hitFlg = true;
+                        
+                    }else if(L < hitRight && hitRight < R && T < hitBottom && hitBottom < B){
+      
+                        hitFlg = true;
+    
+                    }else if(L < hitX1 && hitX1 < R && T < hitY1 && hitY1 < B){
+                        
+                        hitFlg = true;
+                        
+                    }else if(L < hitRight1 && hitRight1 < R && T < hitY1 && hitY1 < B){
+                        
+                        hitFlg = true;
+                        
+                    }else if(L < hitX1 && hitX1 < R && T < hitBottom1 && hitBottom1 < B){
+        
+                        hitFlg = true;
+                        
+                    }else if(L < hitRight1 && hitRight1 < R && T < hitBottom1 && hitBottom1 < B){
+      
+                        hitFlg = true;
+    
+                    }else if(L < hitX2 && hitX2 < R && T < hitY2 && hitY2 < B){
+                        
+                        hitFlg = true;
+                        
+                    }else if(L < hitRight2 && hitRight2 < R && T < hitY2 && hitY2 < B){
+                        
+                        hitFlg = true;
+                        
+                    }else if(L < hitX2 && hitX2 < R && T < hitBottom2 && hitBottom2 < B){
+        
+                        hitFlg = true;
+                        
+                    }else if(L < hitRight2 && hitRight2 < R && T < hitBottom2 && hitBottom2 < B){
+      
+                        hitFlg = true;
+                    
+                    }else if(L < hitX3 && hitX3 < R && T < hitY3 && hitY3 < B){
+                        
+                        hitFlg = true;
+                        
+                    }else if(L < hitRight3 && hitRight3 < R && T < hitY3 && hitY3 < B){
+                        
+                        hitFlg = true;
+                        
+                    }else if(L < hitX3 && hitX3 < R && T < hitBottom3 && hitBottom3 < B){
+        
+                        hitFlg = true;
+                        
+                    }else if(L < hitRight3 && hitRight3 < R && T < hitBottom3 && hitBottom3 < B){
+      
+                        hitFlg = true;
+    
+                    }else if(L < hitX5 && hitX5 < R && T < hitY5 && hitY5 < B){
+                        
+                        hitFlg = true;
+                        
+                    }else if(L < hitRight5 && hitRight5 < R && T < hitY5 && hitY5 < B){
+                        
+                        hitFlg = true;
+                        
+                    }else if(L < hitX5 && hitX5 < R && T < hitBottom5 && hitBottom5 < B){
+        
+                        hitFlg = true;
+                        
+                    }else if(L < hitRight5 && hitRight5 < R && T < hitBottom5 && hitBottom5 < B){
+      
+                        hitFlg = true;
+    
+                    }else if(L < hitX6 && hitX6 < R && T < hitY6 && hitY6 < B){
+                        
+                        hitFlg = true;
+                        
+                    }else if(L < hitRight6 && hitRight6 < R && T < hitY6 && hitY6 < B){
+                        
+                        hitFlg = true;
+                        
+                    }else if(L < hitX6 && hitX6 < R && T < hitBottom6 && hitBottom6 < B){
+        
+                        hitFlg = true;
+                        
+                    }else if(L < hitRight6 && hitRight6 < R && T < hitBottom6 && hitBottom6 < B){
+      
+                        hitFlg = true;
+    
+                    }else if(L < hitX7 && hitX7 < R && T < hitY7 && hitY7 < B){
+                        
+                        hitFlg = true;
+                        
+                    }else if(L < hitRight7 && hitRight7 < R && T < hitY7 && hitY7 < B){
+                        
+                        hitFlg = true;
+                        
+                    }else if(L < hitX7 && hitX7 < R && T < hitBottom7 && hitBottom7 < B){
+        
+                        hitFlg = true;
+                        
+                    }else if(L < hitRight7 && hitRight7 < R && T < hitBottom7 && hitBottom7 < B){
+      
+                        hitFlg = true;
+    
+                    }else if(L < hitX8 && hitX8 < R && T < hitY8 && hitY8 < B){
+                        
+                        hitFlg = true;
+                        
+                    }else if(L < hitRight8 && hitRight8 < R && T < hitY8 && hitY8 < B){
+                        
+                        hitFlg = true;
+                        
+                    }else if(L < hitX8 && hitX8 < R && T < hitBottom8 && hitBottom8 < B){
+        
+                        hitFlg = true;
+                        
+                    }else if(L < hitRight8 && hitRight8 < R && T < hitBottom8 && hitBottom8 < B){
+      
+                        hitFlg = true;
+    
+                    }
+                    
+                    if(hitFlg){
+                        p++;
+                        alert(p);
+                        $(function(){
+                            $('#Image1').fadeOut(100,function(){$(this).fadeIn(100)}).fadeOut(100,function(){$(this).fadeIn(100)});
+                        });
+                        document.getElementById("two").style.display ='none';
+                        if(p == 1){
+                            document.getElementById("one").style.display ='block';
+                        }
+                        else if(p == 2){
+                            document.getElementById("one").style.display ='none';
+                            document.getElementById("zero").style.display ='block';
+                        }else if(p == 3){
+                            window.location.href = "index6.html";
+                        }
+                    }
+                    
+                    if(L < hitX4 && hitX4 < R && T < hitY4 && hitY4 < B){
+                        
+                        hitFlg2 = true;
+                        
+                    }else if(L < hitRight4 && hitRight4 < R && T < hitY4 && hitY4 < B){
+                        
+                        hitFlg2 = true;
+                        
+                    }else if(L < hitX4 && hitX4 < R && T < hitBottom4 && hitBottom4 < B){
+        
+                        hitFlg2 = true;
+                        
+                    }else if(L < hitRight4 && hitRight4 < R && T < hitBottom4 && hitBottom4 < B){
+      
+                        hitFlg2 = true;
+    
+                    }
+                    
+                    if(hitFlg2){
+                        q++;
+                        alert(q);
+                        var ele = document.createElement("img");
+                        ele.setAttribute("src", "dirty.png");
+	                    ele.setAttribute("style", "position:absolute;top:900px;left:240px;height:100px;width:200px;");
+                        ele.setAttribute("onClick", "kitanaite();");
+
+	                    document.getElementById("d1").appendChild(ele);
+                    }
+                    
+         
+                    // 位置 X,Y 座標を覚えておく
+                    this.pageX = (isTouch ? event.changedTouches[0].pageX : e.pageX);
+                    this.pageY = (isTouch ? event.changedTouches[0].pageY : e.pageY);
+                    
+                },
+                
+                'touchend mouseup': function(e) {
+                    if (!this.touched) {
+                        return;
+                    }
+         
+                    
+                    this.touched = false;
+         
+                    // 必要なら以下で最終の hoge の位置を取得し何かに使う
+                    // this.pageX
+                    // this.pageY
+                }
+            });
+     }
+     
+    function anime_tako(){
+
+        document.getElementById("tako").style.display ='block';
+        $('#tako').animate({
+            'left': '500px',
+            'top': '300px'
+        }).animate({'left':'0px',}).animate({'left':'800px',},{'duration': 3000,
+                                                               'complete': function(){
+                                                                                      $('#tako').animate({'left': '0px'}, 3000).animate({'left': '400px','top':'500px'}, 5000).animate({'left': '100px','top':'900px'}, 5000).animate({'left': '500px',}, 5000).animate({'left': '200px','top':'200px'}, 5000).animate({'left': '500px',}, 5000).animate({'left': '0px',}, 5000).animate({'top':'2000px',}, 10000);
+                                                                                      
+                                                                                       setTimeout(function(){
+                                                                                                  document.getElementById("tako").style.width = '5%';
+                                                                                                  document.getElementById("tako").style.height = '5%';
+                                                                                                  $("#tako").stop().animate({'top':'500px'}).animate({'left':'500px'}).animate({'top':'0px'}).animate({'left':'0px'}).animate({'top':'2000px'},1000);
+                                                                                    　　},40000);
+
+                                                                           }
+        });
+        
+    }
+
+    setInterval('anime_mayo()', 10000);
+    function anime_mayo(){
+       
+        $('#mayo').animate({
+            'left': '200px'
+        }).animate({
+            'left': '400px'
+        }, 'slow','swing');
+
+    }
+    
+    function anime_tako1(){
+       setTimeout(function(){$('#tako1').animate({'left': '0px', 'top': '0px'},10000).animate({'left': '600px', 'top': '500px'}, 10000).animate({'left': '200px', 'top': '500px'}, 2000).animate({'left': '500px', 'top': '900px'}, 2000).animate({'top': '100px'}, 2000).animate({'left': '0px'}, 5000).animate({'left': '500px', 'top': '400px'},3000).animate({'left': '100px', 'top': '300px'},4000).animate({'left': '400px', 'top': '700px'}, 10000).animate({'top': '100px'}, 5000).animate({'left': '200px', 'top': '2000px'}, 3000); 
+       
+       });
+        
+    }
+    
+    function anime_tako2(){
+       setTimeout(function(){$('#tako2').animate({'left': '0px', 'top': '900px'},10000).animate({'left': '400px', 'top': '700px'}, 10000).animate({'left': '300px', 'top': '200px'}, 1000).animate({'left': '200px', 'top': '700px'}, 5000).animate({'top': '100px'}, 5000).animate({'left': '600px'}, 5000).animate({'left': '100px', 'top': '300px'},4000).animate({'left': '500px', 'top': '400px'},3000).animate({'left': '600px', 'top': '200px'}, 10000).animate({'top': '100px'}, 2000).animate({'left': '200px', 'top': '2000px'}, 3000); 
+       
+       });
+        
+    }
+    
+    setInterval('anime_migi()', 30000);
+    
+    function anime_migi(){
+       setTimeout(function(){$('#migi').animate({'left': '0px', 'top': '700px'},300).animate({'left': '400px', 'top': '2000px'}, 300); 
+       
+       });
+        
+    }
+    
+    function anime_cheese(){
+
+        $('#cheese').animate({
+            'left': '300px',
+            'top': '200px'
+        },5000).animate({'top': '800px'},5000)
+        .animate({'left':'500px',},5000)
+        .animate({'left': '-100px'},5000)
+        .animate({'left': '500px',
+            'top': '100px'},5000)
+        .animate({'left': '0px'},5000)
+        .animate({'left': '600px',
+            'top': '900px'},5000)
+        .animate({'left': '100px'},5000)
+        .animate({'left': '600px',
+            'top': '100px'},5000)
+        .animate({'left': '500px'},5000)
+        .animate({'top': '600px'},5000)
+        .animate({'left': '100px'},5000)
+        .animate({'left': '200px',
+            'top': '100px'},5000)
+        .animate({'top': '1000px'},5000)
+        .animate({'top': '1000px'},5000)
+        .animate({'top': '1000px'},5000)
+        .animate({'top': '-1000px'},5000)
+        .animate({'left': '200px'},5000);
+        
+    }
+    
+    function anime_cheese1(){
+
+        $('#cheese1').animate({
+            'left': '200px',
+            'top': '100px'
+        },5000).animate({'top': '200px'},5000)
+        .animate({'left':'200px',},6000)
+        .animate({'left': '800px'},7000)
+        .animate({'left': '200px',
+            'top': '100px'},3000)
+        .animate({'left': '0px'},3000)
+        .animate({'left': '500px',
+            'top': '100px'},5000)
+        .animate({'left': '200px'},1000)
+        .animate({'left': '800px',
+            'top': '100px'},5000)
+        .animate({'left': '500px'},5000)
+        .animate({'top': '600px'},5000)
+        .animate({'left': '100px'},5000)
+        .animate({'left': '200px',
+            'top': '100px'},5000)
+        .animate({'top': '1000px'},5000)
+        .animate({'top': '1000px'},5000)
+        .animate({'top': '1000px'},5000)
+        .animate({'top': '-1000px'},5000)
+        .animate({'left': '200px'},5000);
+        
+    }
+    
+    function anime_cheese2(){
+
+        $('#cheese2').animate({
+            'left': '550px',
+            'top': '900px'
+        },5000).animate({'top': '600px'},5000)
+        .animate({'left':'400px',},6000)
+        .animate({'left': '-100px'},7000)
+        .animate({'left': '300px',
+            'top': '200px'},5000)
+        .animate({'left': '0px'},7000)
+        .animate({'left': '600px',
+            'top': '900px'},5000)
+        .animate({'left': '100px'},5000)
+        .animate({'left': '600px',
+            'top': '100px'},5000)
+        .animate({'left': '500px'},5000)
+        .animate({'top': '600px'},5000)
+        .animate({'left': '100px'},5000)
+        .animate({'left': '200px',
+            'top': '100px'},5000)
+        .animate({'top': '1000px'},5000)
+        .animate({'top': '1000px'},5000)
+        .animate({'top': '1000px'},5000)
+        .animate({'top': '-1000px'},5000)
+        .animate({'left': '200px'},5000);
+        
+    }
+    
+    function anime_cheese3(){
+
+        $('#cheese3').animate({
+            'left': '400px',
+            'top': '700px'
+        },5000).animate({'top': '600px'},4000)
+        .animate({'left':'0px',},5000)
+        .animate({'left': '800px'},4000)
+        .animate({'left': '300px',
+            'top': '1000px'},3000)
+        .animate({'left': '0px'},5000)
+        .animate({'left': '400px',
+            'top': '0px'},6000)
+        .animate({'left': '200px'},1000)
+        .animate({'left': '800px',
+            'top': '100px'},5000)
+        .animate({'left': '500px'},5000)
+        .animate({'top': '600px'},5000)
+        .animate({'left': '100px'},5000)
+        .animate({'left': '200px',
+            'top': '900px'},5000)
+        .animate({'top': '1000px'},5000)
+        .animate({'top': '1000px'},5000)
+        .animate({'top': '1000px'},5000)
+        .animate({'top': '-1000px'},5000)
+        .animate({'left': '100px'},5000);
+        
+    }
+    
+    setInterval('anime_mayo1()', 30000);
+    
+    function anime_mayo1(){
+
+        $('#mayo1').animate({
+            'left': '300px',
+            'top': '200px'
+        },5000).animate({'top': '900px'},4000)
+        .animate({'left':'100px',},3000)
+        .animate({'left': '850px'},4000)
+        .animate({'left': '500px',
+            'top': '100px'},3000)
+        .animate({'left': '0px'},500)
+        .animate({'left': '800px',
+            'top': '900px'},6000)
+        .animate({'left': '200px'},1000)
+        .animate({'left': '800px',
+            'top': '100px'},5000)
+        .animate({'left': '500px'},5000)
+        .animate({'top': '600px'},5000)
+        .animate({'left': '100px'},5000)
+        .animate({'left': '200px',
+            'top': '900px'},5000)
+        .animate({'top': '1000px'},5000)
+        .animate({'top': '1000px'},5000)
+        .animate({'top': '1000px'},5000)
+        .animate({'top': '-1000px'},5000)
+        .animate({'left': '100px'},5000);
+        
+    }
+    
+    function kitanaite(){
+        
+        var elem = document.createElement("div");
+        elem.setAttribute("style", "position:absolute;top:0px;left:0px;height:2000px;width:2000px;background-color: white;");
+        elem.setAttribute("id", "hikari");
+
+	    document.getElementById("d1").appendChild(elem);
+        
+        var elem2 = document.createElement("div");
+        elem2.setAttribute("style", "position:absolute;top:0px;left:0px;height:2000px;width:2000px;background-color: black;display:none;");
+        elem2.setAttribute("id", "yami");
+        
+        document.getElementById("d1").appendChild(elem2);
+        
+        var elet = document.createElement("img");
+        elet.setAttribute("src", "t1.png");
+        elet.setAttribute("style", "position:absolute;top:500px;left:240px;height:200px;width:200px;display:none;z-index:2;");
+        elet.setAttribute("class", "t");
+        elet.setAttribute("id", "t1");
+
+	    document.getElementById("d1").appendChild(elet);
+        
+        var elet2 = document.createElement("img");
+        elet2.setAttribute("src", "t2.png");
+        elet2.setAttribute("style", "position:absolute;top:500px;left:240px;height:200px;width:200px;display:none;z-index:3;");
+        elet2.setAttribute("class", "t");
+        elet2.setAttribute("id", "t2");
+
+        document.getElementById("d1").appendChild(elet2);
+        
+        var elet3 = document.createElement("img");
+        elet3.setAttribute("src", "t3.png");
+        elet3.setAttribute("style", "position:absolute;top:500px;left:240px;height:200px;width:200px;display:none;z-index:4;");
+        elet3.setAttribute("class", "t");
+        elet3.setAttribute("id", "t3");
+
+        document.getElementById("d1").appendChild(elet3);
+        
+        var elet4 = document.createElement("img");
+        elet4.setAttribute("src", "t4.png");
+        elet4.setAttribute("style", "position:absolute;top:500px;left:240px;height:200px;width:200px;display:none;z-index:5;");
+        elet4.setAttribute("class", "t");
+        elet4.setAttribute("id", "t4");
+
+        document.getElementById("d1").appendChild(elet4);
+        
+        var orb = document.createElement("div");
+        orb.setAttribute("style", "position:absolute;top:600px;left:310px;height:0px;width:0px;background-color: rgba(255, 241, 202, 0.8);border-radius: 50%;box-shadow: 0 0 2000px rgba(255, 241, 202, 0.8), 0 0 2000px rgba(255, 241, 202, 0.8), 0 0 3000px rgba(255, 241, 202, 0.9);z-index:1;display:none;");
+        orb.setAttribute("class", "t");
+        orb.setAttribute("id", "orb");
+
+        document.getElementById("d1").appendChild(orb);
+        
+        var orb2 = document.createElement("div");
+        orb2.setAttribute("style", "position:absolute;top:0px;left:0px;height:2000px;width:2000px;background-color: rgba(255, 241, 202, 0.8);z-index:6;display:none;");
+        orb2.setAttribute("id", "orb2");
+        
+        document.getElementById("d1").appendChild(orb2);
+        
+         $('#hikari').fadeOut(2000,function(){$('#yami').fadeIn(500)});
+         
+         setTimeout(function(){
+            $('#t1').fadeIn(1000,function(){$(this).fadeOut(100)});
+            $('#t2').fadeIn(1150,function(){$(this).fadeOut(100)});
+            $('#t3').fadeIn(1350,function(){$(this).fadeOut(150)});
+            $('#t4').fadeIn(1500);
+        },5000);
+        
+        setTimeout(function(){
+            $('#orb').show().animate({
+              top: '-500px',
+              left: '-500px',
+              width: '2000px',
+              height: '2000px'
+            }, 3000,function(){
+                $('#orb2').fadeIn(1000,function(){$('#t4').fadeOut(1000)});
+                
+                });
+        },7000);
+        
+    }
+
+    </script>
+    <style>
+    
+        #Image1{
+        position:absolute;
+        display:block;
+        top:700px;
+        left:0px;
+        
+        }
+        
+        #tako{
+        position:absolute;
+        display:none;
+        }
+        #tako1{
+        position:absolute;
+        top:200px;
+        left:800px;
+        width: 30px;
+        height: 30px;
+        }
+        
+        #tako2{
+        position:absolute;
+        top:400px;
+        left:800px;
+        width: 30px;
+        height: 30px;
+        }
+        
+        #mayo{
+        position:absolute;
+        top:400px;
+        left:300px;
+        }
+        
+        #life{
+        position:absolute;
+        top:100px;
+        left:40px;
+        width:120px;
+        height:60px;
+        }
+        
+        img.suuji{
+        position:absolute;
+        height:60px;
+        width:50px;
+        top:100px;
+        left:190px;
+        
+        }
+        
+        #migi{
+        position:absolute;
+        top:700px;
+        left:800px;
+        width: 100px;
+        height: 100px;
+        }
+        
+        div.kiiro{
+        width: 50px;
+        height: 50px;
+        border-radius: 25px;
+        background-color: yellow;
+        }
+        
+        div.pink{
+        width: 50px;
+        height: 50px;
+        border-radius: 25px;
+        background-color: #ffdab9;
+        }
+        
+        #cheese{
+        position:absolute;
+        top:1000px;
+        left:800px;
+        }
+        
+        #cheese1{
+        position:absolute;
+        top:1200px;
+        left:800px;
+        }
+        
+        #cheese2{
+        position:absolute;
+        top:-1000px;
+        left:-800px;
+        }
+        
+        #cheese3{
+        position:absolute;
+        top:-1000px;
+        left:-800px;
+        }
+        
+        #mayo1{
+        position:absolute;
+        top:-1000px;
+        left:-800px;
+        width: 200px;
+        height: 200px;
+        }
+
+    
+    </style>
+</head>
+<body onLoad="anime_cheese(); anime_cheese1(); anime_cheese2(); anime_cheese3();" style="background-color:#b0e0e6;">
+<div id ="d1" style = "position:absolute;top:-20px;left:-20px;height:1300px;width:640px;overflow:hidden;">
+    <img id="Image1" src="takoyakiwalk.gif" />
+    <img onLoad ="anime_tako();" id="tako" src="takosan.gif" />
+    <img onLoad ="anime_tako1();" id="tako1" src="takosan.gif" />
+    <img onLoad ="anime_tako2();" id="tako2" src="takosan.gif" />
+    <img onLoad ="anime_mayo();" id="mayo" src="mayo1.gif" />
+    <img id="life" src="life1.png" />
+    <img class="suuji" id="two" src="2p.png"/>
+    <img class="suuji" id ="one" src="1p.png" style="display:none;"/>
+    <img class="suuji" id ="zero" src="0p.png" style="display:none;"/>
+    <img id="migi" src="migi.png"/>
+    <div class="kiiro" id="cheese"></div>
+    <div class="kiiro" id="cheese1"></div>
+    <div class="pink" id="cheese2"></div>
+    <div class="pink" id="cheese3"></div>
+    <img id="mayo1" src="mayo1.gif" />
+</div>
+</body>
+</html>
